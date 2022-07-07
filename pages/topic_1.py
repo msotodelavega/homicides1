@@ -79,7 +79,7 @@ df = df.replace({"arma": dict_values})
 
 
 df['ano'] = df['fecha'].dt.year
-df["dia"] = df["fecha"].dt.day_name(locale="es")
+df["dia"] = df["fecha"].dt.day_name
 df = df.reindex(columns=['fecha','ano','dia','departamento','municipio','codigo', 'arma', 'genero', 'edad_grupo', 'cantidad'])
 
 #para grafica por año

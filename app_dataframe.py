@@ -15,19 +15,10 @@ datos_col = pd.read_csv('data/homicidios_policia.csv',
 
 datos_col.columns = ['departamento','municipio','codigo','arma','fecha','genero', 'edad_grupo', 'cantidad']
 
-# add population
-datos_col['codigo'] = datos_col['codigo'].astype(str).str[:-3].astype(int)
-cod_dane['Código Municipio']  = cod_dane['Código Municipio'].str.replace(',', '')
-cod_dane['Código Municipio'] = cod_dane['Código Municipio'].astype(int)
-
-pobl = pd.read_csv('Data/poblacion_municipios.csv')
-cod_dane = cod_dane.merge(pobl[['Código Municipio', 'Pobl']], on = 'Código Municipio', how = 'left')
-cod_dane['Pobl']  = cod_dane['Pobl'].str.replace(',', '').astype(int)
-
 #clearing cod_dane
 cod_dane['Código Centro Poblado']=cod_dane['Código Centro Poblado'].apply(lambda x: x.replace(',',''))
 cod_dane['Código Centro Poblado'] = cod_dane['Código Centro Poblado'].astype(int)
-df
+
 #clearing dotos_col
 df = datos_col.copy()
 keep_values =  ["ANTIOQUIA","VALLE","CUNDINAMARCA"]
@@ -135,29 +126,45 @@ df_dpto_month = df_dpto_month.reset_index()
 df_dpto_day = df.groupby(["dia","departamento"])['cantidad'].sum()
 df_dpto_day = df_dpto_day.reset_index()
 
-df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Código Municipio','Tipo Centro Poblado','Pobl']],
-                  left_on='codigo',
-                  right_on='Código Municipio',
+df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 'Longitud', 'Latitud']],
+                  left_on='codigo', 
+                  right_on='Código Centro Poblado', 
                   how='left')
 
-df_hom = df_hom.drop(columns=['Código Municipio'])
+df_hom = df_hom.drop(columns=["Código Centro Poblado"])
 
-# CARGA GEOJSON MUNICIPIOS 1
-f = open("Data/MunicipiosEdit.json")
+# AJUSTES A LOS NOMBRES DE LOS MUNICIPIOS
+#cod_dane.columns = cod_dane.columns.str.replace(' ','_')
+#cod_dane = cod_dane.replace(',','', regex=True)
+cod_dane['Código Centro Poblado'] = cod_dane['Código Centro Poblado'].astype(int)
+df_hom['codigo'] = df_hom['codigo'].astype(int)
+df_hom['municipio'] = df_hom.municipio.str.replace('(CT)', '')
+df_hom['municipio'] = df_hom.municipio.str.replace('[(+*)]', '')
+df_hom['municipio'] = df_hom.municipio.str.replace('\s', '')
+
+# CARGA GEOJSON MUNICIPIOS
+f = open("data/MunicipiosVeredas19MB.json", encoding="utf8")
 geojson = json.load(f)
-json_names = {}
+json_names = []
 for loc in geojson['features']:
     loc['id'] = loc['properties']['MPIO_CNMBR']
-    if loc['properties']['DPTO_CCDGO'] =='05':
-        json_names[loc['properties']['DPTOMPIO'][1:]] = loc['id']
-    else:
-        json_names[loc['properties']['DPTOMPIO']] = loc['id']
+    json_names.append(loc['id'])
 
-# df resumen municipal
-df_mun = df_hom.groupby('codigo').sum()
-df_mun['Pobl'] = df_hom.groupby('codigo').mean().Pobl
-df_mun['HOMIC_por_POBLMUN'] = df_mun['cantidad'] / df_mun['Pobl']
-df_mun['municipio'] = df_mun.index
 # Aca se cambian los nombres en el DF para que sean como los del json
-df_mun['municipio'] = df_mun['municipio'].astype(str).map(json_names)
-df_mun = df_mun.merge(df_hom[['codigo','departamento']], on ='codigo', how = 'left')
+df_names = list(df_hom.municipio.unique())
+dict_mun ={}
+dist_list = []
+min_dist = 1000
+match = ''
+for name in df_names:
+    for name2 in json_names:
+        dist = jellyfish.levenshtein_distance(name, name2)
+        if dist < min_dist:
+            min_dist = dist
+            match = name2
+        
+    dist_list.append(min_dist)
+    dict_mun[name] = match
+    min_dist = 1000
+    
+df_hom['municipio'] = df_hom.municipio.replace(dict_mun)

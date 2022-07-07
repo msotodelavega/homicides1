@@ -49,7 +49,7 @@ def get_bar_chart3():
         xaxis_title='Day',
         yaxis_title='Homicides',
         )
-    fig.update_xaxes(tickangle=270, tickmode='linear')
+    fig.update_xaxes(tickangle=270, tickmode='linear', categoryarray=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'])
     barChart3 = dcc.Graph(
         figure=fig,
         style={'width': '100%', 'height': '60vh', 'display': 'inline-block'})

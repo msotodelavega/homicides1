@@ -1,6 +1,7 @@
 from dash import html
 from dash_labs.plugins import register_page
 import dash_bootstrap_components as dbc
+from app_dataframe import df_year_month
 
 register_page(
     __name__,

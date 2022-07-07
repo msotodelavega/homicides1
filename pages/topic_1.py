@@ -14,6 +14,6 @@ register_page(
 )
 
 def layout():
-    return dbc.Row([dbc.Col('hola', width=12),
+    return dbc.Row([dbc.Col(sidebar(), width=12),
         dbc.Col('prueba', width=12),
         ])

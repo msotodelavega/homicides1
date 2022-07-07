@@ -143,6 +143,42 @@ df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 
 
 df_hom = df_hom.drop(columns=["Código Centro Poblado"])
 
+# AJUSTES A LOS NOMBRES DE LOS MUNICIPIOS
+#cod_dane.columns = cod_dane.columns.str.replace(' ','_')
+#cod_dane = cod_dane.replace(',','', regex=True)
+cod_dane['Código Centro Poblado'] = cod_dane['Código Centro Poblado'].astype(int)
+df_hom['codigo'] = df_hom['codigo'].astype(int)
+df_hom['municipio'] = df_hom.municipio.str.replace('(CT)', '')
+df_hom['municipio'] = df_hom.municipio.str.replace('[(+*)]', '')
+df_hom['municipio'] = df_hom.municipio.str.replace('\s', '')
+
+# CARGA GEOJSON MUNICIPIOS
+f = open("data/MunicipiosVeredas19MB.json", encoding="utf8")
+geojson = json.load(f)
+json_names = []
+for loc in geojson['features']:
+    loc['id'] = loc['properties']['MPIO_CNMBR']
+    json_names.append(loc['id'])
+
+# Aca se cambian los nombres en el DF para que sean como los del json
+df_names = list(df_hom.municipio.unique())
+dict_mun ={}
+dist_list = []
+min_dist = 1000
+match = ''
+for name in df_names:
+    for name2 in json_names:
+        dist = jellyfish.levenshtein_distance(name, name2)
+        if dist < min_dist:
+            min_dist = dist
+            match = name2
+        
+    dist_list.append(min_dist)
+    dict_mun[name] = match
+    min_dist = 1000
+    
+df_hom['municipio'] = df_hom.municipio.replace(dict_mun)
+
 #---
 
 register_page(

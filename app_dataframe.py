@@ -4,14 +4,6 @@ import numpy as np
 import json
 import jellyfish
 
-#---
-
-# Standard Imports
-import pandas as pd
-import numpy as np
-import json
-import jellyfish
-
 # Import data
 cod_dane= pd.read_csv('data/cod_dane.csv')
 
@@ -77,7 +69,7 @@ dict_values =  {
 df = df.replace({"arma": dict_values})
 
 df['ano'] = df['fecha'].dt.year
-df["dia"] = df["fecha"].dt.day_name
+df["dia"] = df["fecha"].dt.day_name()
 df = df.reindex(columns=['fecha','ano','dia','departamento','municipio','codigo', 'arma', 'genero', 'edad_grupo', 'cantidad'])
 
 #para grafica por año
@@ -177,4 +169,3 @@ for name in df_names:
     
 df_hom['municipio'] = df_hom.municipio.replace(dict_mun)
 
-#---

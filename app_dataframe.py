@@ -70,8 +70,6 @@ df = df.replace({"arma": dict_values})
 
 # Create year column
 df['ano'] = df['fecha'].dt.year
-# Create week column
-df['week'] = df['fecha'].dt.to_period('M')
 # Create dayname column as Monday, Tuesday...
 df["dia"] = df["fecha"].dt.day_name
 #Reorder columns index
@@ -107,6 +105,8 @@ df_gen = df_gen.to_frame().reset_index()
 df_weapon = df.groupby("arma")['cantidad'].sum()
 df_weapon = df_weapon.to_frame().reset_index()
 
+# Create week column
+df['week'] = df['fecha'].dt.to_period('M')
 # Group data to show a boxplot by department and weekly
 df_departamento = df.groupby(["departamento","week"])['cantidad'].sum()
 df_departamento = df_departamento.to_frame().reset_index()
@@ -171,5 +171,4 @@ for name in df_names:
     min_dist = 1000
     
 df_hom['municipio'] = df_hom.municipio.replace(dict_mun)
-df_hom
 #---

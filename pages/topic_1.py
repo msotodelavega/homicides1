@@ -77,6 +77,24 @@ dict_values =  {
 
 df = df.replace({"arma": dict_values})
 
+
+df['ano'] = df['fecha'].dt.year
+df["dia"] = df["fecha"].dt.day_name(locale="es")
+df = df.reindex(columns=['fecha','ano','dia','departamento','municipio','codigo', 'arma', 'genero', 'edad_grupo', 'cantidad'])
+
+#para grafica por año
+df_yearly = df.groupby("ano")['cantidad'].sum()
+df_yearly = df_yearly.to_frame().reset_index()
+
+#para grafica por mes
+df['mes'] = df['fecha'].dt.month
+df_monthly = df.groupby("mes")['cantidad'].sum()
+df_monthly = df_monthly.to_frame().reset_index()
+
+#para grafica por dia
+df_daily = df.groupby("dia")['cantidad'].sum()
+df_daily = df_daily.to_frame().reset_index()
+
 #------------------
 
 register_page(

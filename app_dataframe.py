@@ -4,7 +4,6 @@ import numpy as np
 import json
 import jellyfish
 
-
 # Import data
 cod_dane= pd.read_csv('data/cod_dane.csv')
 

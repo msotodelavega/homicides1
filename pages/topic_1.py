@@ -154,5 +154,5 @@ register_page(
 
 def layout():
     return dbc.Row([dbc.Col(sidebar(), width=12),
-        dbc.Col('hola', width=12)
+        dbc.Col(graficar(), width=12)
         ])

@@ -12,7 +12,7 @@ datos_col = pd.read_csv('data/homicidios_policia.csv',
                         sep=';',
                         parse_dates=["FECHA HECHO"],
                         dayfirst=True
-                       );
+                       )
 
 datos_col.columns = ['departamento','municipio','codigo','arma','fecha','genero', 'edad_grupo', 'cantidad']
 
@@ -131,6 +131,7 @@ df_dpto_month = df_dpto_month.reset_index()
 df_dpto_day = df.groupby(["dia","departamento"])['cantidad'].sum()
 df_dpto_day = df_dpto_day.reset_index()
 
+# Df merged with code Dane information to georeference homicides
 df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 'Longitud', 'Latitud']],
                   left_on='codigo', 
                   right_on='Código Centro Poblado', 
@@ -138,16 +139,14 @@ df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 
 
 df_hom = df_hom.drop(columns=["Código Centro Poblado"])
 
-# AJUSTES A LOS NOMBRES DE LOS MUNICIPIOS
-#cod_dane.columns = cod_dane.columns.str.replace(' ','_')
-#cod_dane = cod_dane.replace(',','', regex=True)
+# Settings to municipalities names
 cod_dane['Código Centro Poblado'] = cod_dane['Código Centro Poblado'].astype(int)
 df_hom['codigo'] = df_hom['codigo'].astype(int)
 df_hom['municipio'] = df_hom.municipio.str.replace('(CT)', '')
 df_hom['municipio'] = df_hom.municipio.str.replace('[(+*)]', '')
 df_hom['municipio'] = df_hom.municipio.str.replace('\s', '')
 
-# CARGA GEOJSON MUNICIPIOS
+# Load GEOJSON municipalities
 f = open("data/MunicipiosVeredas19MB.json", encoding="utf8")
 geojson = json.load(f)
 json_names = []
@@ -155,7 +154,7 @@ for loc in geojson['features']:
     loc['id'] = loc['properties']['MPIO_CNMBR']
     json_names.append(loc['id'])
 
-# Aca se cambian los nombres en el DF para que sean como los del json
+# Change municipalities names in df so that they are the same as in the geojson
 df_names = list(df_hom.municipio.unique())
 dict_mun ={}
 dist_list = []
@@ -173,5 +172,5 @@ for name in df_names:
     min_dist = 1000
     
 df_hom['municipio'] = df_hom.municipio.replace(dict_mun)
-
+df_hom
 #---

@@ -4,6 +4,14 @@ import numpy as np
 import json
 import jellyfish
 
+#---
+
+# Standard Imports
+import pandas as pd
+import numpy as np
+import json
+import jellyfish
+
 # Import data
 cod_dane= pd.read_csv('data/cod_dane.csv')
 
@@ -169,3 +177,4 @@ for name in df_names:
     
 df_hom['municipio'] = df_hom.municipio.replace(dict_mun)
 
+#---

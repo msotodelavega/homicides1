@@ -24,6 +24,7 @@ def graficar1():
         xaxis_title='Day',
         yaxis_title='Homicides',
         )
+    fig.update_xaxes(tickangle=270, tickmode='linear')
     grafica = dcc.Graph(
         figure=fig,
         style={'width': '100%', 'height': '60vh', 'display': 'inline-block'})

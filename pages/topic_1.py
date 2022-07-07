@@ -95,6 +95,54 @@ df_monthly = df_monthly.to_frame().reset_index()
 df_daily = df.groupby("dia")['cantidad'].sum()
 df_daily = df_daily.to_frame().reset_index()
 
+#para grafica de serie
+df['ano_mes'] = df['fecha'].dt.to_period('M').astype(dtype=str)
+df_year_month = df.groupby("ano_mes")['cantidad'].sum()
+df_year_month = df_year_month.to_frame().reset_index()
+
+#para grafica de rangos de edad
+df_age = df.groupby("edad_grupo")['cantidad'].sum()
+df_age = df_age.to_frame().reset_index()
+
+#para grafico por genero
+df_gen = df.groupby("genero")['cantidad'].sum()
+df_gen = df_gen.to_frame().reset_index()
+
+#para grafico por tipo de arma
+df_weapon = df.groupby("arma")['cantidad'].sum()
+df_weapon = df_weapon.to_frame().reset_index()
+
+#para grafica box plot por departamento
+df['week'] = df['fecha'].dt.to_period('M')
+df_departamento = df.groupby(["departamento","week"])['cantidad'].sum()
+df_departamento = df_departamento.to_frame().reset_index()
+
+#para grafica box plot municipio
+df['week'] = df['fecha'].dt.to_period('M')
+df_municipio = df.groupby(["municipio","week","departamento"])['cantidad'].sum()
+df_municipio = df_municipio.to_frame().reset_index()
+df_municipio = df_municipio.sort_values(by='cantidad', ascending=False)
+df_municipio = df_municipio[df_municipio['cantidad'] > 20]
+
+#para grafico departamento x año
+df_dpto_year = df.groupby(["ano","departamento"])['cantidad'].sum()
+df_dpto_year = df_dpto_year.reset_index()
+
+#para grafico departamento x mes
+df_dpto_month = df.groupby(["mes","departamento"])['cantidad'].sum()
+df_dpto_month = df_dpto_month.reset_index()
+
+#para grafico departamento x día
+df_dpto_day = df.groupby(["dia","departamento"])['cantidad'].sum()
+df_dpto_day = df_dpto_day.reset_index()
+
+df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 'Longitud', 'Latitud']],
+                  left_on='codigo', 
+                  right_on='Código Centro Poblado', 
+                  how='left')
+
+df_hom = df_hom.drop(columns=["Código Centro Poblado"])
+
 #------------------
 
 register_page(

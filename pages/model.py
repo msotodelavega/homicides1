@@ -83,7 +83,7 @@ def graficar(city_dropdown):
     fig2.add_trace(go.Scatter(x=df['fecha'], y=df['cantidad'],
                         #mode='lines',
                         name='original'))
-    fig2.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['total'],
+    """fig2.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['total'],
                         #mode='lines',
                         name='fitted'))
     fig2.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['upper'],
@@ -96,7 +96,7 @@ def graficar(city_dropdown):
                         name='lower',
                         fill='tonexty',
                         line_color='rgba(200,200,200,0.2)',
-                        showlegend=False,))
+                        showlegend=False,))"""
     fig2.update_layout(
         showlegend=False,
         title_text='Forecasting homicides in '+city,

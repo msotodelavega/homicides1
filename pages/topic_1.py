@@ -13,7 +13,8 @@ register_page(
     order = 3
 )
 
-# Create figure
+# ======================== Plotly Graphs
+
 def graficar():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=list(df_year_month.ano_mes), y=list(df_year_month.cantidad)))
@@ -55,6 +56,8 @@ def graficar():
         figure=fig,
         style={'width': '100%', 'height': '80vh', 'display': 'inline-block'})
     return grafica
+
+# ======================== App Layout
 
 def layout():
     return dbc.Row([dbc.Col(sidebar(), width=12),

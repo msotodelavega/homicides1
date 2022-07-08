@@ -7,6 +7,7 @@ app = dash.Dash(
 )
 server = app.server
 
+#create nav bar
 dl.print_registry()
 navbar = dbc.NavbarSimple(
     dbc.Nav(
@@ -22,6 +23,7 @@ navbar = dbc.NavbarSimple(
     className="mb-2",
 )
 
+#create layaut
 app.layout = dbc.Container(
     [navbar, dl.plugins.page_container],
     fluid=True,

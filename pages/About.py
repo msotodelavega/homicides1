@@ -9,12 +9,14 @@ register_page(
     order=6
     )
 
+#images
 imagen1 = '/assets/alexis.jpg'
 imagen2 = '/assets/buitrago.jpg'
 imagen3 = '/assets/carlos.jpg'
 imagen4 = '/assets/montaño.jpg'
 imagen5 = '/assets/manuel.jpg'
 
+#presentation cards
 card_1 = dbc.Card(
     [
         dbc.CardImg(src=imagen1, top=True, style={'higth':'10rem'}),
@@ -23,9 +25,9 @@ card_1 = dbc.Card(
                 html.H4("Alexis Berrio", className="card-title"),
                 html.P(
                     "Electronic Engineer | Data Analyst "
-                    "Universidad de Antioquía "
-                    "Data AnalystData Analyst Bancolombia "
-                    " ",
+                    "Universidad de Antioquía. "
+                    "Data Analyst Bancolombia "
+                    ".                        ",
                     className="card-text",
                 ),
                 dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/johan-alexis-berrio-arenas-8368731bb/",),
@@ -100,8 +102,8 @@ card_5 = dbc.Card(
                 html.H4("Manuel Soto", className="card-title"),
                 html.P(
                     "Industrial enginering / Universidad de Córdoba. "
-                    "Master / Universidad de los Andes "
-                    "Professor Universidad Tecnologia de Bolívar",
+                    "Master / Universidad de los Andes. "
+                    "Professor Universidad Tecnológia de Bolívar",
                     className="card-text",
                 ),
                 dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/manuel-soto-de-la-vega-23163220b/",),

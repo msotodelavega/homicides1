@@ -14,6 +14,7 @@ register_page(
     order=5
     )
 
+#sarimax funtion
 def sarimax_forecast_city(SARIMAX_model, df, periods):
     # Forecast
     n_periods = periods
@@ -44,18 +45,19 @@ def layout():
         dbc.Col(dcc.Graph(id='fore_fig'), width=12),
     ])
 
+#callback figure
 @callback(
     Output("fore_fig", "figure"),
     Input("city_dropdown", "value"),
 )
 
-# Create figure
+# make figure
 def graficar(city_dropdown):
 
     df = df_hom[['fecha','cantidad']]
 
+    #change city
     city = city_dropdown
-
     if city == 'MEDELLÍN':
         df = df_hom[df_hom['municipio']=='MEDELLÍN'][['fecha','cantidad']]
     elif city == 'BOGOTÁ, D.C.':
@@ -70,6 +72,7 @@ def graficar(city_dropdown):
     df.columns = ['total']
     df['month_index'] = df.index.month
 
+    #import train
     if city == 'MEDELLÍN':
         name = 'model/SARIMAX_med.pkl'
     elif city == 'BOGOTÁ, D.C.':
@@ -91,6 +94,7 @@ def graficar(city_dropdown):
     upper_series = upper_series.to_frame().reset_index()
     upper_series.columns = ['fecha','total']
 
+    #make figure
     fig2 = go.Figure()
     fig2.add_trace(go.Scatter(x=df['fecha'], y=df['total'],
                         #mode='lines',

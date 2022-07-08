@@ -11,6 +11,8 @@ register_page(__name__,name='word cloud')
 # ======================== Plotly Graphs
 imagen = '/assets/wordcloud.png'
 
+# ======================== App Layout
+
 def layout():
     return dbc.Row([dbc.Col(sidebar(), width=12),
                     dbc.Col(html.Img(src=imagen, height="520px"), width=12),

@@ -20,7 +20,7 @@ def graficar1():
     fig = px.bar(df_dpto_day, x="dia", y="cantidad", barmode="group", facet_col="departamento", category_orders={'dia': dias_semana}, color='cantidad', color_continuous_scale=px.colors.sequential.Tealgrn)
     fig.update_layout(
         showlegend=False,
-        title_text='Homicides per state and day',
+        title_text='Homicides per departamento and day',
         xaxis_title='Day',
         yaxis_title='Homicides',
         )
@@ -34,7 +34,7 @@ def graficar2():
     fig = px.bar(df_dpto_month, x="mes", y="cantidad", barmode="group", facet_col="departamento", color='cantidad', color_continuous_scale=px.colors.sequential.Tealgrn)
     fig.update_layout(
         showlegend=False,
-        title_text='Homicides per state and month',
+        title_text='Homicides per departamento and month',
         xaxis_title='Month',
         yaxis_title='Homicides',
         )
@@ -48,7 +48,7 @@ def graficar3():
     fig = px.bar(df_dpto_year, x="ano", y="cantidad", barmode="group", facet_col="departamento", color='cantidad', color_continuous_scale=px.colors.sequential.Tealgrn)
     fig.update_layout(
         showlegend=False,
-        title_text='Homicides per state and year',
+        title_text='Homicides per departamento and year',
         xaxis_title='Year',
         yaxis_title='Homicides',
         )
@@ -57,6 +57,8 @@ def graficar3():
         figure=fig,
         style={'width': '100%', 'height': '60vh', 'display': 'inline-block'})
     return grafica
+
+# ======================== App Layout
 
 def layout():
     return dbc.Row([dbc.Col(sidebar(), width=12),

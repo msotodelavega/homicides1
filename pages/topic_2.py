@@ -56,12 +56,6 @@ def get_bar_chart3():
     return barChart3
 
 # ======================== App Layout
-#layout = html.Div([
-#    get_bar_chart1(),
-#    get_bar_chart2(),
-#    get_bar_chart3(),
-#    get_line_chart1(),
-#])
 
 def layout():
     return dbc.Row([dbc.Col(sidebar(), width=12),

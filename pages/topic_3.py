@@ -12,6 +12,8 @@ register_page(
     name='homicides by characteristics',
     )
 
+# ======================== App Layout
+
 def layout():
     return dbc.Row([dbc.Col(sidebar(), width=12),
                     dbc.Col(html.P("View:"), width=12),
@@ -23,5 +25,5 @@ def layout():
     Input("names", "value"))
 
 def generate_chart(names):
-    fig = px.pie(df, values='cantidad', names=names, hole=.3)
+    fig = px.pie(df, values='cantidad', names=names, hole=.5)
     return fig

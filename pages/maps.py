@@ -33,6 +33,7 @@ def layout():
         dbc.Col(dcc.Graph(id='Col_map'), width=12),
     ])
 
+#callback maps
 @callback(
     Output("Col_map", "figure"),
     [
@@ -42,6 +43,7 @@ def layout():
     ]
 )
 
+#make chart
 def graficar(state_dropdown,start_date,end_date):
     df2 = df[df['departamento'] == state_dropdown]
     df2 = df2[(df2['fecha'] >= start_date) & (df['fecha'] < end_date)]

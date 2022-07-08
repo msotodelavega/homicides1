@@ -1,3 +1,5 @@
+#.py with dataframe operations
+
 # Standard Imports
 import pandas as pd
 import numpy as np
@@ -14,6 +16,9 @@ datos_col = pd.read_csv('data/homicidios_policia.csv',
                        );
 
 datos_col.columns = ['departamento','municipio','codigo','arma','fecha','genero', 'edad_grupo', 'cantidad']
+
+#calculate total homicides
+total = datos_col['cantidad'].sum()
 
 #clearing cod_dane
 cod_dane['Código Centro Poblado']=cod_dane['Código Centro Poblado'].apply(lambda x: x.replace(',',''))
@@ -72,60 +77,61 @@ df['ano'] = df['fecha'].dt.year
 df["dia"] = df["fecha"].dt.day_name()
 df = df.reindex(columns=['fecha','ano','dia','departamento','municipio','codigo', 'arma', 'genero', 'edad_grupo', 'cantidad'])
 
-#para grafica por año
+#for chart per year
 df_yearly = df.groupby("ano")['cantidad'].sum()
 df_yearly = df_yearly.to_frame().reset_index()
 
-#para grafica por mes
+#for chart per month
 df['mes'] = df['fecha'].dt.month
 df_monthly = df.groupby("mes")['cantidad'].sum()
 df_monthly = df_monthly.to_frame().reset_index()
 
-#para grafica por dia
+#for chart per day
 df_daily = df.groupby("dia")['cantidad'].sum()
 df_daily = df_daily.to_frame().reset_index()
 
-#para grafica de serie
+#for chart serie times
 df['ano_mes'] = df['fecha'].dt.to_period('M').astype(dtype=str)
 df_year_month = df.groupby("ano_mes")['cantidad'].sum()
 df_year_month = df_year_month.to_frame().reset_index()
 
-#para grafica de rangos de edad
+#for chart range of age
 df_age = df.groupby("edad_grupo")['cantidad'].sum()
 df_age = df_age.to_frame().reset_index()
 
-#para grafico por genero
+#for chart per gender
 df_gen = df.groupby("genero")['cantidad'].sum()
 df_gen = df_gen.to_frame().reset_index()
 
-#para grafico por tipo de arma
+#for chart per kind of weapons
 df_weapon = df.groupby("arma")['cantidad'].sum()
 df_weapon = df_weapon.to_frame().reset_index()
 
-#para grafica box plot por departamento
+#for chart box plot per departamento
 df['week'] = df['fecha'].dt.to_period('M')
 df_departamento = df.groupby(["departamento","week"])['cantidad'].sum()
 df_departamento = df_departamento.to_frame().reset_index()
 
-#para grafica box plot municipio
+#for charta box plot per municipio
 df['week'] = df['fecha'].dt.to_period('M')
 df_municipio = df.groupby(["municipio","week","departamento"])['cantidad'].sum()
 df_municipio = df_municipio.to_frame().reset_index()
 df_municipio = df_municipio.sort_values(by='cantidad', ascending=False)
 df_municipio = df_municipio[df_municipio['cantidad'] > 20]
 
-#para grafico departamento x año
+#for chart departamento x year
 df_dpto_year = df.groupby(["ano","departamento"])['cantidad'].sum()
 df_dpto_year = df_dpto_year.reset_index()
 
-#para grafico departamento x mes
+#for chart departamento x month
 df_dpto_month = df.groupby(["mes","departamento"])['cantidad'].sum()
 df_dpto_month = df_dpto_month.reset_index()
 
-#para grafico departamento x día
+#for chart departamento x day
 df_dpto_day = df.groupby(["dia","departamento"])['cantidad'].sum()
 df_dpto_day = df_dpto_day.reset_index()
 
+#merge df with cod dane
 df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 'Longitud', 'Latitud']],
                   left_on='codigo', 
                   right_on='Código Centro Poblado', 
@@ -133,16 +139,14 @@ df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 
 
 df_hom = df_hom.drop(columns=["Código Centro Poblado"])
 
-# AJUSTES A LOS NOMBRES DE LOS MUNICIPIOS
-#cod_dane.columns = cod_dane.columns.str.replace(' ','_')
-#cod_dane = cod_dane.replace(',','', regex=True)
+# change names of municipalies
 cod_dane['Código Centro Poblado'] = cod_dane['Código Centro Poblado'].astype(int)
 df_hom['codigo'] = df_hom['codigo'].astype(int)
 df_hom['municipio'] = df_hom.municipio.str.replace('(CT)', '')
 df_hom['municipio'] = df_hom.municipio.str.replace('[(+*)]', '')
 df_hom['municipio'] = df_hom.municipio.str.replace('\s', '')
 
-# CARGA GEOJSON MUNICIPIOS
+# load geojson municipalies
 f = open("data/MunicipiosVeredas19MB.json", encoding="utf8")
 geojson = json.load(f)
 json_names = []
@@ -150,7 +154,7 @@ for loc in geojson['features']:
     loc['id'] = loc['properties']['MPIO_CNMBR']
     json_names.append(loc['id'])
 
-# Aca se cambian los nombres en el DF para que sean como los del json
+# change names in df
 df_names = list(df_hom.municipio.unique())
 dict_mun ={}
 dist_list = []

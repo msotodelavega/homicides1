@@ -14,17 +14,21 @@ register_page(
 
 lista = df_departamento.departamento.unique()
 
+# ======================== Plotly Graphs
+
 def get_box_chart_departamento():
     fig = px.violin(df_departamento, x='departamento', y='cantidad', box=True, color='departamento')
     fig.update_layout(
         showlegend=False,
-        title_text='BoxPlot Homicides per state',
-        xaxis_title='State',
+        title_text='BoxPlot Homicides per departamento',
+        xaxis_title='Departamento',
         yaxis_title='Homicides',
         )
     fig.update_xaxes(tickangle=270)
     grafica = dcc.Graph(figure=fig, style={'width': '100%', 'height': '80vh', 'display': 'inline-block'})
     return grafica
+
+# ======================== App Layout
 
 def layout():
     return dbc.Row([
@@ -46,8 +50,8 @@ def get_box_chart_municipio(dpto):
     fig = px.strip(df_municipio[mask],x='municipio', y='cantidad', color='departamento')
     fig.update_layout(
         showlegend=False,
-        title_text='StripPlot Homicides per borough',
-        xaxis_title='Borough',
+        title_text='StripPlot Homicides per municipio',
+        xaxis_title='Municipio',
         yaxis_title='Homicides',
         )
     fig.update_xaxes(tickangle=270)

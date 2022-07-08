@@ -5,6 +5,7 @@ import dash_labs as dl
 
 dl.print_registry()
 
+#create sidebar
 def sidebar():
     return html.Div(
         dbc.Nav(

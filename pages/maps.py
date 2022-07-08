@@ -6,13 +6,14 @@ import plotly.express as px
 from datetime import datetime as dt
 from app_dataframe import df_hom, geojson
 
-df = df_hom
-
 register_page(
     __name__,
     top_nav=True,
     order=4
     )
+
+df = df_hom
+center_dicts = {'ANTIOQUIA': [6.7, -75.4], 'VALLE': [3.8, -76.3], 'CUNDINAMARCA': [4.8, -74.0] }
 
 def layout():
     return dbc.Row([
@@ -27,8 +28,8 @@ def layout():
             id='date_picker',
             min_date_allowed=dt(2010, 1, 1),
             max_date_allowed=dt(2020, 12, 31),
-            start_date=dt(2016,1,1).date(),
-            end_date=dt(2017, 1, 1).date()
+            start_date=dt(2010,1,1).date(),
+            end_date=dt(2020, 12, 31).date()
             ), width = 6),
         dbc.Col(dcc.Graph(id='Col_map'), width=12),
     ])
@@ -52,9 +53,10 @@ def graficar(state_dropdown,start_date,end_date):
         locations='municipio',
         color='cantidad',
         geojson=geojson,
-        zoom=4,
+        zoom=6,
         mapbox_style="open-street-map",
-        center={"lat": 8, "lon": -75},
-        opacity=0.5 )
+        center={"lat": center_dicts[state_dropdown][0], "lon": center_dicts[state_dropdown][1]},
+        opacity=0.5,
+        labels={'cantidad':'homicides'})
     fig2.update_layout()
     return fig2

@@ -17,6 +17,15 @@ datos_col = pd.read_csv('data/homicidios_policia.csv',
 
 datos_col.columns = ['departamento','municipio','codigo','arma','fecha','genero', 'edad_grupo', 'cantidad']
 
+# add population
+datos_col['codigo'] = datos_col['codigo'].astype(str).str[:-3].astype(int)
+cod_dane['Código Municipio']  = cod_dane['Código Municipio'].str.replace(',', '')
+cod_dane['Código Municipio'] = cod_dane['Código Municipio'].astype(int)
+
+pobl = pd.read_csv('Data/poblacion_municipios.csv')
+cod_dane = cod_dane.merge(pobl[['Código Municipio', 'Pobl']], on = 'Código Municipio', how = 'left')
+cod_dane['Pobl']  = cod_dane['Pobl'].str.replace(',', '').astype(int)
+
 #calculate total homicides
 total = datos_col['cantidad'].sum()
 
@@ -71,6 +80,7 @@ dict_values =  {
 "LIQUIDOS":"OTRAS ARMAS"
 }
 
+#df base
 df = df.replace({"arma": dict_values})
 
 df['ano'] = df['fecha'].dt.year
@@ -132,7 +142,7 @@ df_dpto_day = df.groupby(["dia","departamento"])['cantidad'].sum()
 df_dpto_day = df_dpto_day.reset_index()
 
 #merge df with cod dane
-df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 'Longitud', 'Latitud']],
+df_hom = pd.merge(df, cod_dane[['Código Centro Poblado','Tipo Centro Poblado', 'Longitud', 'Latitud', 'Pobl']],
                   left_on='codigo', 
                   right_on='Código Centro Poblado', 
                   how='left')
@@ -147,7 +157,7 @@ df_hom['municipio'] = df_hom.municipio.str.replace('[(+*)]', '')
 df_hom['municipio'] = df_hom.municipio.str.replace('\s', '')
 
 # load geojson municipalies
-f = open("data/MunicipiosVeredas19MB.json", encoding="utf8")
+f = open("data/MunicipiosEdit.json", encoding="utf8")
 geojson = json.load(f)
 json_names = []
 for loc in geojson['features']:

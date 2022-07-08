@@ -15,29 +15,29 @@ texto1 = 'Homicides in Colombia represent a structural phenomenon that needs to 
 texto2 = 'The number of homicides is one of the most important indicators of violence, in this context, Colombia is in the top 10 of homicides in Latin America with 22.64 deaths per 100.000 habitants. The typification of homicides is important because it recognizes and evidences a specific type of violence that arises from a structural and systematic problem in Colombia. The analysis of murders is important because it allows us to create data structures to get better policies of prevention and security. With this model, the public and private institutions may create action plans to focus the politics of prevention of homicides in Colombia. '
 
 card_content_1 = [
+    dbc.CardHeader('World Ranking'),
     dbc.CardBody(
         [
-            html.H6("Country Ranking", className="card-title"),
-            html.H1("16th in the world",className="card-text"),
+            html.H1("16th",className="card-text"),
             html.H6('By www.indexmundi.com', className='card-text'),
         ]
     ),
 ]
 
 card_content_2 = [
+    dbc.CardHeader('Latinoamerican Ranking'),
     dbc.CardBody(
         [
-            html.H6("Latinoamerica Ranking", className="card-title"),
-            html.H2("8th in Latinoamérica",className="card-text"),
+            html.H1("8th",className="card-text"),
             html.H6('By www.indexmundi.com', className='card-text'),
         ]
     ),
 ]
 
 card_content_3 = [
+    dbc.CardHeader('Total homicides'),
     dbc.CardBody(
         [
-            html.H6("Total homicides", className="card-title"),
             html.H1(total,className="card-text"),
             html.H6('between years 2011-2020', className='card-text'),
         ]
@@ -47,8 +47,8 @@ card_content_3 = [
 #layout
 layout = html.Div(
     [
-        dbc.Card(dbc.CardBody(texto1),className="mb-3",),
-        dbc.Card(dbc.CardBody(texto2),className="mb-3",),
+        dbc.Card(dbc.CardBody(texto1),className="mb-3",color='#C3D6E1'),
+        dbc.Card(dbc.CardBody(texto2),className="mb-3",color='#C3D6E1'),
         dbc.Row(
             [
                 dbc.Col(dbc.Card(card_content_1, color="primary", inverse=True), width=4),

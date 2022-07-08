@@ -111,7 +111,7 @@ def graficar(city_dropdown):
         showlegend=False,
         title_text='Forecasting homicides in '+city,
         xaxis_title='Date',
-        yaxis_title='Homicides',
+        yaxis_title='Homicides1',
         )
     fig2.update_traces(mode='lines')
     return fig2

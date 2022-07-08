@@ -9,12 +9,6 @@ register_page(
     order=6
     )
 
-texto1 = open("assets/texto1.txt", mode='r')
-texto2 = open("assets/texto2.txt", mode='r')
-texto3 = open("assets/texto3.txt", mode='r')
-texto4 = open("assets/texto4.txt", mode='r')
-texto5 = open("assets/texto5.txt", mode='r')
-
 imagen1 = '/assets/alexis.jpg'
 imagen2 = '/assets/buitrago.jpg'
 imagen3 = '/assets/carlos.jpg'
@@ -28,11 +22,13 @@ card_1 = dbc.Card(
             [
                 html.H4("Alexis Berrio", className="card-title"),
                 html.P(
-                    "Some quick example text to build on the card title and "
-                    "make up the bulk of the card's content.",
+                    "Electronic Engineer | Data Analyst "
+                    "Universidad de Antioquía "
+                    "Data AnalystData Analyst Bancolombia "
+                    " ",
                     className="card-text",
                 ),
-                dbc.Button("Go profile", color="primary"),
+                dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/johan-alexis-berrio-arenas-8368731bb/",),
             ]
         ),
     ],
@@ -46,11 +42,12 @@ card_2 = dbc.Card(
             [
                 html.H4("Oscar Buitrago", className="card-title"),
                 html.P(
-                    "Some quick example text to build on the card title and "
-                    "make up the bulk of the card's content.",
+                    "Business Administrator & specialist in Senior "
+                    "Management. "
+                    "Analista Arquitectura de Aplicaciones de TI",
                     className="card-text",
                 ),
-                dbc.Button("Go profile", color="primary"),
+                dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/oscar-buitrago-21081531/",),
             ]
         ),
     ],
@@ -64,11 +61,12 @@ card_3 = dbc.Card(
             [
                 html.H4("Carlos Lopez", className="card-title"),
                 html.P(
-                    "Some quick example text to build on the card title and "
-                    "make up the bulk of the card's content.",
+                    "Data Scientist with experience in the venture capital "
+                    "and startup environment. Skilled in Python, SQL and DAX. "
+                    "Data Scientist at ADDI",
                     className="card-text",
                 ),
-                dbc.Button("Go profile", color="primary"),
+                dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/carlos-d-lopez/",),
             ]
         ),
     ],
@@ -86,7 +84,7 @@ card_4 = dbc.Card(
                     "make up the bulk of the card's content.",
                     className="card-text",
                 ),
-                dbc.Button("Go profile", color="primary"),
+                dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/oscar-eduardo-monta%C3%B1o-lopez-84199b72/",),
             ]
         ),
     ],
@@ -100,11 +98,12 @@ card_5 = dbc.Card(
             [
                 html.H4("Manuel Soto", className="card-title"),
                 html.P(
-                    "Some quick example text to build on the card title and "
-                    "make up the bulk of the card's content.",
+                    "Industrial enginering / Universidad de Córdoba. "
+                    "Master / Universidad de los Andes "
+                    "Professor Universidad Tecnologia de Bolívar",
                     className="card-text",
                 ),
-                dbc.Button("Go profile", color="primary"),
+                dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/manuel-soto-de-la-vega-23163220b/",),
             ]
         ),
     ],

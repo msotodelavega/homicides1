@@ -44,7 +44,7 @@ card_2 = dbc.Card(
                 html.P(
                     "Business Administrator & specialist in Senior "
                     "Management. "
-                    "Analista Arquitectura de Aplicaciones de TI",
+                    "Analista Arquitectura de Aplicaciones de TI.",
                     className="card-text",
                 ),
                 dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/oscar-buitrago-21081531/",),
@@ -80,7 +80,7 @@ card_4 = dbc.Card(
             [
                 html.H4("Oscar Montaño", className="card-title"),
                 html.P(
-                    "systems engineer, master in computer science, developer "
+                    "Systems engineer, master in computer science, developer "
                     "in vuejs, nuxt, react, Laravel, SQL, and noSQL. "
                     "Xi'an University of Technology",
                     className="card-text",

@@ -57,7 +57,7 @@ def graficar(city_dropdown):
     df = df_hom[['fecha','cantidad','municipio']]
 
     #change city
-    city = "MEDELLÍN"
+    city = city_dropdown
     if city == 'MEDELLÍN':
         df = df[df['municipio']=='MEDELLÍN'][['fecha','cantidad']]
         df_fitted = pd.read_excel('data/pred_med.xlsx')

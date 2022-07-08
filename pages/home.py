@@ -36,7 +36,7 @@ card_content_3 = [
     dbc.CardBody(
         [
             html.H6("Total homicides", className="card-title"),
-            html.H1("1",className="card-text"),
+            html.H1("1000",className="card-text"),
             html.H6('between years 2011-2020', className='card-text'),
         ]
     ),

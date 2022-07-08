@@ -80,21 +80,26 @@ def graficar(city_dropdown):
 
     #make figure
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=list(df.fecha), y=list(df.cantidad)))
+    fig.add_trace(go.Scatter(x=list(df.fecha), y=list(df.cantidad),
+                        mode='lines',))
     fig.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['total'],
+                        mode='lines',
                         name='fitted'))
     fig.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['upper'],
+                        mode='lines',
                         name='upper_series',
                         line_color='rgba(200,200,200,0.2)',
                         showlegend=False,))
     fig.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['lower'],
+                        mode='lines',
                         name='lower',
                         fill='tonexty',
                         line_color='rgba(200,200,200,0.2)',
                         showlegend=False,))
     fig.update_layout(
-        title_text='Trend of homicides in Colombia',
-        xaxis_title="date",
-        yaxis_title="homicides",
+        showlegend=False,
+        title_text='Forecasting homicides in '+city,
+        xaxis_title='Date',
+        yaxis_title='Homicides',
         )    
     return fig

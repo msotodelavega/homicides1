@@ -80,8 +80,9 @@ card_4 = dbc.Card(
             [
                 html.H4("Oscar Montaño", className="card-title"),
                 html.P(
-                    "Some quick example text to build on the card title and "
-                    "make up the bulk of the card's content.",
+                    "systems engineer, master in computer science, developer "
+                    "in vuejs, nuxt, react, Laravel, SQL, and noSQL. "
+                    "Xi'an University of Technology",
                     className="card-text",
                 ),
                 dbc.Button("Go Linkedin", color="primary",external_link=True,href="https://www.linkedin.com/in/oscar-eduardo-monta%C3%B1o-lopez-84199b72/",),

@@ -60,19 +60,19 @@ def graficar(city_dropdown):
     city = city_dropdown
     if city == 'MEDELLÍN':
         df = df[df['municipio']=='MEDELLÍN'][['fecha','cantidad']]
-        df_fitted = pd.read_excel('data/pred_med.xlsx')
+        df_fitted = pd.read_csv('data/pred_med.csv')
     elif city == 'BOGOTÁ, D.C.':
         df = df[df['municipio']=='BOGOTÁ, D.C.'][['fecha','cantidad']]
-        df_fitted = pd.read_excel('data/pred_bog.xlsx')
+        df_fitted = pd.read_csv('data/pred_bog.csv')
     elif city == 'CALI':
         df = df[df['municipio']=='CALI'][['fecha','cantidad']]
-        df_fitted = pd.read_excel('data/pred_cal.xlsx')
+        df_fitted = pd.read_csv('data/pred_cal.csv')
     else:
         df = df[['fecha','cantidad']]
-        df_fitted = pd.read_excel('data/pred_tot.xlsx')
+        df_fitted = pd.read_csv('data/pred_tot.csv')
 
-    df_fitted.columns = ['index','fecha','total','lower','upper']
-    df_fitted = df_fitted.drop(columns='index')
+    #df_fitted.columns = ['index','fecha','total','lower','upper']
+    #df_fitted = df_fitted.drop(columns='index')
 
     df = df.set_index('fecha')
     df = df.resample('M').sum()

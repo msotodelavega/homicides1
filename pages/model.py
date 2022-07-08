@@ -80,9 +80,7 @@ def graficar(city_dropdown):
 
     #make figure
     fig2 = go.Figure()
-    fig2.add_trace(go.Scatter(x=df['fecha'], y=df['cantidad'],
-                        #mode='lines',
-                        name='original'))
+    fig2.add_trace(go.Scatter(x=list(df.fecha), y=list(df.cantidad),))
     """fig2.add_trace(go.Scatter(x=df_fitted['fecha'], y=df_fitted['total'],
                         #mode='lines',
                         name='fitted'))
